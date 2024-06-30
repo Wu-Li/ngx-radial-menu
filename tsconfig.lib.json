@@ -9,6 +9,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "ngx-radial-menu": ["./dist/ngx-radial-menu"],
+    },
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
