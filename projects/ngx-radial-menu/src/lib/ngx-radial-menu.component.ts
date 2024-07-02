@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models";
 import Calculation from "./classes/calculation.class";
@@ -26,9 +26,10 @@ export class NgxRadialMenuComponent implements OnInit {
   public percent!: string;
   public observables: Observable<Click>[] = [];
   public data: Object = {};
+  public coordinates?: Coordinates;
+  public menuOpen: boolean = false;
 
   constructor(
-    private renderer: Renderer2,
     private menuService: NgxRadialMenuService
   ){}
 
@@ -45,15 +46,12 @@ export class NgxRadialMenuComponent implements OnInit {
 
   /** Menu Visibility **/
   public show(coordinates?: Coordinates) {
-    if (coordinates) this.setCoordinate(coordinates);
-    this.renderer.addClass(this.menuElement, 'opened-nav');
-  }
-  private setCoordinate(coordinate: Coordinates){
-    this.renderer.setStyle(this.menuElement,'left',coordinate.x+'px');
-    this.renderer.setStyle(this.menuElement,'top',coordinate.y+'px');
+    this.coordinates = coordinates;
+    this.menuOpen = true;
   }
   public hide() {
-    this.renderer.removeClass(this.menuElement, 'opened-nav');
+    this.menuOpen = false;
+    delete this.coordinates;
   }
 
   /** Anchors **/

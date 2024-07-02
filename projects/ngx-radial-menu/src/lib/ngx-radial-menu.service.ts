@@ -1,9 +1,8 @@
 //menu.service.ts
-import {ElementRef, Injectable, Renderer2} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
-import {Click, MenuConfig, MenuItem} from "./models";
+import {Click, MenuItem} from "./models";
 import {takeUntil} from "rxjs/operators";
-import {NgxRadialMenuComponent} from "./ngx-radial-menu.component";
 
 @Injectable({  providedIn: 'root' })
 export class NgxRadialMenuService {
