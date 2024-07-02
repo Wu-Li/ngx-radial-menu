@@ -4,6 +4,7 @@ import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models"
 import Calculation from "./classes/calculation.class";
 import {AfterDirective} from "./directives/after.directive";
 import {MatIconModule} from "@angular/material/icon";
+import {NgxRadialMenuService} from "./ngx-radial-menu.service";
 
 @Component({
   selector: 'ngx-radial-menu',
@@ -28,12 +29,18 @@ export class NgxRadialMenuComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
+    private menuService: NgxRadialMenuService
   ){}
 
   ngOnInit() {
     this.config = {...defaultConfig, ...this.menuConfig};
     this.percent = (this.config.percent * 100) + '%';
     this.calc = new Calculation(this.config);
+    this.observables = this.config.menus.map(menu => this.menuService.registerMenuItem(menu));
+    this.observables.map((obs: Observable<Click>) =>
+      obs.subscribe(({event,handler}) => {
+        if (handler) handler(event, this.data);
+      }));
   }
 
   /** Menu Visibility **/
