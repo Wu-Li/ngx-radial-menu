@@ -1,27 +1,14 @@
-# NgxRadialMenu
+# ngx-radial-menu
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+This repository is an Angular adaptation of the npm package circular-menu by Yan Dong.
+https://github.com/yandongCoder/circular-menu
 
-## Development server
+The API is delivered through a service that can generate dynamic menus based on the element targeted with the right-click or long press. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation 
 
-## Code scaffolding
+npm install ngx-radial-menu
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Then add the NgxRadialMenuService to your module or component. 
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
