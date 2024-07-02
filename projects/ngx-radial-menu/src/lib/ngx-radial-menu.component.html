@@ -1,7 +1,6 @@
-<ngx-radial-menu
-  #menuElement
+<menu #menuElement after
   class="circular-menu"
-  after
+  [class.circular-sub-menu]="!!parentMenu"
   [style.width]="this.calc.menuSize.width"
   [style.height]="this.calc.menuSize.height"
   [style.margin-top]="this.calc.menuSize.marginTop"
@@ -32,6 +31,11 @@
         [style.background]="'radial-gradiant(transparent ' + percent + ', ' + this.config.background + ' ' + percent + ')'"
         (click)="menuItemClick($event, menuItem)"
       ></a>
+      <ngx-radial-menu
+        *ngIf="menuItem.menus && menuItem.menus.length > 0"
+        [config]="subMenuConfig(menuItem.menus, i)"
+        [parentMenu]="this"
+      ></ngx-radial-menu>
     </li>
   </ul>
-</ngx-radial-menu>
+</menu>

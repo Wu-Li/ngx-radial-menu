@@ -1,6 +1,6 @@
-import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
-import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem, Style} from "./models";
+import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
+import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models";
 import Calculation from "./classes/calculation.class";
 import {AfterDirective} from "./directives/after.directive";
 
@@ -13,14 +13,13 @@ import {AfterDirective} from "./directives/after.directive";
   templateUrl: './ngx-radial-menu.component.html',
   styleUrls: ['./ngx-radial-menu.component.css'],
 })
-export class NgxRadialMenuComponent {
+export class NgxRadialMenuComponent implements OnInit {
   @ViewChild('menuElement', { static: false }) menuElement!: ElementRef;
-  @Input('menu') menu?: MenuItem;
+  @Input('config') menuConfig?: Partial<MenuConfig>;
+  @Input('parentMenu') parentMenu?: NgxRadialMenuComponent;
 
-  public container!: HTMLElement;
-  public pMenu?: NgxRadialMenuComponent;
-  public calc!: Calculation;
   public config!: MenuConfig;
+  public calc!: Calculation;
   public percent!: string;
   public observables: Observable<Click>[] = [];
   public data: Object = {};
@@ -29,18 +28,10 @@ export class NgxRadialMenuComponent {
     private renderer: Renderer2,
   ){}
 
-  public initialize(
-    container: HTMLElement,
-    config: Partial<MenuConfig>,
-    pMenu?: NgxRadialMenuComponent
-  ) {
-    this.container = container;
-    this.config = {...defaultConfig, ...config};
+  ngOnInit() {
+    this.config = {...defaultConfig, ...this.menuConfig};
     this.percent = (this.config.percent * 100) + '%';
     this.calc = new Calculation(this.config);
-    this.pMenu = pMenu;
-    setTimeout(() => this.renderer.setStyle(this.menuElement.nativeElement, 'display', 'block'),100);
-    return this;
   }
 
   public setConfig(config: Partial<MenuConfig>){
@@ -50,22 +41,16 @@ export class NgxRadialMenuComponent {
   //Show
   public show(coordinates?: Coordinates) {
     if (coordinates) this.setCoordinate(coordinates);
-    this.renderer.addClass(this.container, 'opened-nav');
+    this.renderer.addClass(this.menuElement, 'opened-nav');
   }
   private setCoordinate(coordinate: Coordinates){
-    this.renderer.setStyle(this.container,'left',coordinate.x+'px');
-    this.renderer.setStyle(this.container,'top',coordinate.y+'px');
+    this.renderer.setStyle(this.menuElement,'left',coordinate.x+'px');
+    this.renderer.setStyle(this.menuElement,'top',coordinate.y+'px');
   }
 
   //Hide
   public hide() {
-    this.renderer.removeClass(this.container, 'opened-nav');
-  }
-
-  //Styles
-  public styles(styles: Style) {
-    Object.entries(styles).forEach(([k,v]) =>
-      this.renderer.setStyle(this.container,k,v))
+    this.renderer.removeClass(this.menuElement, 'opened-nav');
   }
 
   //Click Callbacks
@@ -73,7 +58,25 @@ export class NgxRadialMenuComponent {
     if (menuItem.click) menuItem.click.call(this, event, menuItem);
     if(this.config.hideAfterClick){
       this.hide();
-      if(this.pMenu) this.pMenu.hide();
+      if(this.parentMenu) this.parentMenu.hide();
+    }
+  }
+
+  private sizeRatio = 5 / 3;
+  private percentRatio = 0.45;
+  private centralDegRatio = 0.618;
+  //Should be inserted before parent container? How?U
+  public subMenuConfig(menus: MenuItem[], index: number){
+    const totalAngle = this.calc.centralDeg * this.centralDegRatio * menus.length;
+    const start = this.calc.rotateDeg(index) - totalAngle / 2 + this.calc.centralDeg / 2;
+    return {
+      ...this.config,
+      totalAngle,
+      start,
+      percent: this.percentRatio,
+      diameter: this.config.diameter * this.sizeRatio,
+      animation: "into",
+      menus
     }
   }
 }

@@ -23,7 +23,7 @@ export class AfterDirective implements AfterViewInit {
     const id = uuid();
     this.renderer.addClass(this.el.nativeElement, 'after-' + id);
     const style = this.renderer.createElement('style');
-    let styles = '.after-' + id + ':after {';
+    let styles = '.after-' + id + ':after { content:"";';
     styles += this.width? 'width:' + this.width + 'px;' : '';
     styles += this.height? 'height:' + this.height + 'px;' : '';
     styles += this.marginLeft? 'margin-left:' + this.marginLeft + 'px;' : '';
