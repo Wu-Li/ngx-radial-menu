@@ -18,8 +18,7 @@
         [style.height]="calc.listSize.height"
         [style.transform]="'rotate('+ this.calc.rotateDeg(i) +'deg) skew('+ this.calc.skewDeg +'deg)'"
     >
-      <a
-        after
+      <a after
         [href]="menuItem.href||''"
         [target]="menuItem.target||''"
         [class.disabled]="menuItem.disabled()"
@@ -30,7 +29,28 @@
         [style.transform]="'skew(' + -this.calc.skewDeg + 'deg) rotate(' + this.calc.unskewDeg + 'deg) scale(1)'"
         [style.background]="'radial-gradiant(transparent ' + percent + ', ' + this.config.background + ' ' + percent + ')'"
         (click)="menuItemClick($event, menuItem)"
-      ></a>
+      >
+        <div class="horizontal"
+             [style.transform]="config.horizontal ? 'rotate('+ calc.horizontalDeg(i) +'deg)' : ''"
+        >
+          <mat-icon *ngIf="menuItem.icon"
+                    class="cm-icon"
+                    [color]="menuItem.icon.color"
+                    [fontIcon]="menuItem.icon.fontIcon"
+                    [fontSet]="menuItem.icon.fontSet"
+                    [inline]="menuItem.icon.inline"
+                    [svgIcon]="menuItem.icon.svgIcon"
+                    [style.width]="calc.iconSize"
+                    [style.height]="calc.iconSize"
+                    [style.font-size]="calc.iconSize"
+                    [style.margin-top]="calc.iconMargin"
+          ></mat-icon>
+          <span class="text"
+                [style.margin-top]="menuItem.icon ? calc.withIconMarginTop : calc.textTop"
+                [style.top]="menuItem.icon ? calc.withIconTop : 0"
+          >{{menuItem.text}}</span>
+        </div>
+      </a>
       <ngx-radial-menu
         *ngIf="menuItem.menus && menuItem.menus.length > 0"
         [config]="subMenuConfig(menuItem.menus, i)"

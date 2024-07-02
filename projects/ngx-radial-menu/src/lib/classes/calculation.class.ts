@@ -5,6 +5,15 @@ export default class Calculation {
   private fixedTop  = 10;
   private middleRatio = 0.41;
 
+  /** Icon **/
+  public iconSizeRatio = 0.65;
+  public marginTopRatio = 0.2;
+  public fontHeight = 13;
+
+  /** Text **/
+  public withIconMarginTop = "3px";
+  public withIconTop = "-3px";
+
   itemsNum: number;
   spaceNumber: number;
   radius: number;
@@ -20,6 +29,8 @@ export default class Calculation {
   skewDeg: number;
   unskewDeg: number;
   textTop: string;
+  iconSize: string;
+  iconMargin: string;
 
   constructor(
     private config: MenuConfig,
@@ -39,6 +50,8 @@ export default class Calculation {
     this.skewDeg = 90 - this.centralDeg;
     this.unskewDeg = - (90 - this.centralDeg / 2);
     this.textTop = this.getTextTop();
+    this.iconSize = (this.clickZoneRadius * this.iconSizeRatio - this.fontHeight) + 'px';
+    this.iconMargin = (this.clickZoneRadius * this.marginTopRatio - this.fontHeight) + 'px';
   }
 
   private getCoverRadius(radius: number, percent: number): number {
