@@ -1,10 +1,7 @@
 import Calculation from './calculation.class';
 import {MenuConfig, MenuItem} from "../models";
-import CMenu from "./cmenu.class";
-import classed from "../utils/classed";
-import style from "../utils/style";
-import styleSheet from "../utils/styleSheet";
-import on from "../utils/on";
+import {CMenu} from "./cmenu.class";
+import {classed,style,styleSheet,on} from "../utils";
 
 export default class Creator {
   private calc: Calculation;

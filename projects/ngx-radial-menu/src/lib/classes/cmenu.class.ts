@@ -1,10 +1,9 @@
 import Creator from "./creator.class";
 import {Click, Coordinates, defaultConfig, MenuConfig, Style} from "../models";
-import style from "../utils/style";
-import classed from "../utils/classed";
+import {style,classed} from "../utils";
 import {Observable} from "rxjs";
 
-export default class CMenu {
+export class CMenu {
   private creator: Creator;
   private config!: MenuConfig;
   public observables: Observable<Click>[] = [];

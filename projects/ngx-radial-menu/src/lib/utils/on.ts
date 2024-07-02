@@ -1,4 +1,4 @@
-export default function on(
+export function on(
   el: HTMLElement,
   type: string,
   callback: Function,

@@ -1,4 +1,4 @@
-import defaultView from "./window";
+import {window as defaultView} from "./window";
 
 function styleRemove(el: HTMLElement, name: string) {
   el.style.removeProperty(name);
@@ -24,7 +24,7 @@ function styleFunction(
   else el.style.setProperty(name, v, priority);
 }
 
-export default function style(
+export function style(
   el: HTMLElement,
   name: string,
   value: string | number,

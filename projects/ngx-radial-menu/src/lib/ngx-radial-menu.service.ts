@@ -3,7 +3,7 @@ import {ElementRef, Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {Click, MenuConfig, MenuItem} from "./models";
 import {takeUntil} from "rxjs/operators";
-import CMenu from "./classes/cmenu.class";
+import {CMenu} from "./classes/cmenu.class";
 
 
 @Injectable({  providedIn: 'root' })

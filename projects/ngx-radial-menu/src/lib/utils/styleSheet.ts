@@ -1,4 +1,4 @@
-export default function styleSheet(
+export function styleSheet(
   el: HTMLElement,
   prop: string,
   value: string | number,
