@@ -1,8 +1,4 @@
 export class ClassList {
-  static create = (el: HTMLElement) =>
-    (el.classList && el.classList instanceof ClassList)?
-      el.classList : new ClassList(el);
-
   constructor(
     private el: HTMLElement
   ) {
