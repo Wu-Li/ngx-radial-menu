@@ -1,13 +1,14 @@
 //menu.service.ts
 import {ElementRef, Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
-import {Menu, MenuConfig, MenuItem} from "./models";
+import {MenuConfig, MenuItem} from "./models";
 import {takeUntil} from "rxjs/operators";
+import CMenu from "./classes/cmenu.class";
+import {Click} from "./models";
 
-declare var CMenu: any;
 
 @Injectable({  providedIn: 'root' })
-export class MenuService {
+export class NgxRadialMenuService {
   private destroy$: Subject<boolean> = new Subject();
   public destroy() { this.destroy$.next(true) }
 
@@ -16,26 +17,29 @@ export class MenuService {
     .pipe(takeUntil(this.destroy$));
   public click() { this.clickSubject.next() }
 
-  private defaultMenuConfig: MenuConfig = {
+  private defaultMenuConfig: Partial<MenuConfig> = {
     background: '#99AABBCC',
     diameter: 300,
     menus: []
   }
 
   private registerMenuItem(menu: MenuItem) {
-    let subject: Subject<{event: MouseEvent, click?: Function}> = new Subject();
-    let click = menu.click;
-    menu.click = (event: MouseEvent) => subject.next({event, click});
+    let subject: Subject<Click> = new Subject();
+    let handler = menu.click;
+    menu.click = (event: MouseEvent) => subject.next({event, handler});
     return subject.asObservable().pipe(takeUntil(this.destroy$));
   }
 
-  public generateMenu(menuElement: ElementRef, menus: MenuItem[], menuConfig: MenuConfig = this.defaultMenuConfig): Menu {
-    let menu = new CMenu(menuElement.nativeElement).config({...menuConfig, menus});
+  public generateMenu(
+    menuElement: ElementRef,
+    menus: MenuItem[],
+    menuConfig: Partial<MenuConfig> = this.defaultMenuConfig
+  ): CMenu {
+    let menu = new CMenu(menuElement.nativeElement, {...menuConfig, menus});
     menu.observables = menus.map(menu => this.registerMenuItem(menu));
-    menu.data = {};
-    menu.observables.map((obs: Observable<{event: MouseEvent, click?: Function}>) =>
-      obs.subscribe(({event,click}) => {
-        if (click) click(event, menu.data);
+    menu.observables.map((obs: Observable<Click>) =>
+      obs.subscribe(({event,handler}) => {
+        if (handler) handler(event, menu.data);
       }));
     return menu;
   }

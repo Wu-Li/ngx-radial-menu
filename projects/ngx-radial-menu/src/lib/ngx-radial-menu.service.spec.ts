@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { NgxRadialMenuService } from './ngx-radial-menu.service';
+import {NgxRadialMenuService} from './ngx-radial-menu.service';
 
 describe('NgxRadialMenuService', () => {
   let service: NgxRadialMenuService;
