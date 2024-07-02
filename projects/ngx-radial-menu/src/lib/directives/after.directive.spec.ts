@@ -1,4 +1,4 @@
-import { AfterDirective } from './after.directive';
+import {AfterDirective} from './after.directive';
 
 describe('AfterDirective', () => {
   it('should create an instance', () => {

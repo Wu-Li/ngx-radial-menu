@@ -1,5 +1,5 @@
 import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from '@angular/core';
-import { v4 as uuid } from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 @Directive({
   selector: '[after]',

@@ -5,7 +5,6 @@ import {Click, MenuConfig, MenuItem} from "./models";
 import {takeUntil} from "rxjs/operators";
 import {NgxRadialMenuComponent} from "./ngx-radial-menu.component";
 
-
 @Injectable({  providedIn: 'root' })
 export class NgxRadialMenuService {
   constructor(
