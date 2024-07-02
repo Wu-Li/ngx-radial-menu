@@ -2,7 +2,7 @@ import {ClassList} from "../classes/class-list.class";
 
 export default function classed(el: HTMLElement, name: string, value: any) {
   const names = name.trim().split(/^|\s+/);
-  const list = new ClassList(el);
+  const list = ClassList.create(el);
 
   if (arguments.length < 2) {
     let i = -1;

@@ -1,17 +1,18 @@
-export class ClassList extends DOMTokenList {
-  private names: string[] = [];
+export class ClassList {
+  static create = (el: HTMLElement) =>
+    (el.classList && el.classList instanceof ClassList)?
+      el.classList : new ClassList(el);
 
   constructor(
     private el: HTMLElement
   ) {
-    super();
-    if (el.classList && el.classList instanceof ClassList)
-      return el.classList;
     this.names = (el.getAttribute("class") || "")
       .trim().split(/^|\s+/);
   }
 
-  override add(name: string) {
+  private names: string[] = [];
+
+  add(name: string) {
     let i = this.names.indexOf(name);
     if (i < 0) {
       this.names.push(name);
@@ -19,7 +20,7 @@ export class ClassList extends DOMTokenList {
     }
   }
 
-  override remove(name: string) {
+  remove(name: string) {
     var i = this.names.indexOf(name);
     if (i >= 0) {
       this.names.splice(i, 1);
@@ -27,7 +28,7 @@ export class ClassList extends DOMTokenList {
     }
   }
 
-  override contains(name: string) {
+  contains(name: string) {
     return this.names.indexOf(name) >= 0;
   }
 

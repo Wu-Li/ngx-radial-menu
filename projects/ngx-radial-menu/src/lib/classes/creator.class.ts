@@ -153,13 +153,13 @@ export default class Creator {
   private withIconTop = "-3px";
   private createText(
     parent: HTMLElement,
-    data: MenuItem
+    menuItem: MenuItem
   ) {
     const span = document.createElement('span');
-    span.textContent = data.title;
+    span.textContent = menuItem.title;
     classed(span, 'text', true);
-    style(span, 'margin-top', this.hasIcon(data.icon)? this.withIconMarginTop : this.calc.textTop);
-    style(span, 'top', this.hasIcon(data.icon)? this.withIconTop : 0);
+    style(span, 'margin-top', this.hasIcon(menuItem.icon)? this.withIconMarginTop : this.calc.textTop);
+    style(span, 'top', this.hasIcon(menuItem.icon)? this.withIconTop : 0);
     parent.appendChild(span);
   }
 
@@ -189,9 +189,11 @@ export default class Creator {
   ) {
     if(!this.hasIcon(data.icon)) return;
     const span = document.createElement('span');
-    const [icon,color] = data.icon;
-    classed(span, icon + " cm-icon", true);
-    if (color) style(span, 'color', color);
+    if (data.icon) {
+      const [icon,color] = data.icon;
+      classed(span, icon + " cm-icon", true);
+      if (color) style(span, 'color', color);
+    }
     const l = this.calc.clickZoneRadius * this.iconSizeRatio - this.fontHeight + "px",
       m = this.calc.clickZoneRadius * this.marginTopRatio - this.fontHeight + "px";
     style(span, 'width', l);
@@ -200,7 +202,7 @@ export default class Creator {
     style(span, 'margin-top', m);
     parent.appendChild(span);
   }
-  public hasIcon(icon: string | [string,string?]){
+  public hasIcon(icon?: string | [string,string?]){
     if(icon === undefined) return false;
     else if(typeof icon === "string") return icon !== "";
     else return icon.length && icon[0] !== "";
