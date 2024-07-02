@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './ngx-radial-menu.component.html',
-  styleUrls: ['./lib/ngx-radial-menu.component.css'],
+  styleUrls: ['./ngx-radial-menu.component.css'],
 })
 export class NgxRadialMenuComponent {
 
