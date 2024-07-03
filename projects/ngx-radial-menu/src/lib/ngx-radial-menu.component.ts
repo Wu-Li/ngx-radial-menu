@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Observable} from "rxjs";
 import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models";
 import Calculation from "./classes/calculation.class";
@@ -14,14 +14,14 @@ import {BrowserModule} from "@angular/platform-browser";
   imports: [
     AfterDirective,
     MatIconModule,
-    CommonModule,
-    BrowserModule
+    CommonModule
   ],
   providers: [
     NgxRadialMenuService
   ],
   templateUrl: './ngx-radial-menu.component.html',
   styleUrls: ['./ngx-radial-menu.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxRadialMenuComponent implements OnInit {
   @ViewChild('menuElement', { static: false }) menuElement!: ElementRef;

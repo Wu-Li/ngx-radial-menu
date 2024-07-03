@@ -11,6 +11,7 @@
   [after.margin-top]="this.calc.coverSize.marginTop"
   [after.border]="'3px solid ' + this.config.pageBackground"
   [class.opened-nav]="menuOpen"
+  [style.display]="menuOpen ? 'block' : 'none'"
   [style.top]="coordinates!.y+'px'"
   [style.left]="coordinates!.x+'px'"
   (click)="this.hide()"
