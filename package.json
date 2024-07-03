@@ -8,7 +8,23 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wu-Li/ngx-radial-menu.git"
+  },
+  "keywords": [
+    "angular",
+    "radial",
+    "ngx",
+    "circular",
+    "menu",
+    "wheel",
+    "navigation"
+  ],
+  "author": "Wu-Li",
+  "contributors": ["circular-menu: yandongCoder"],
+  "license": "ISC",
+  "private": false,
   "dependencies": {
     "@angular/cdk": "^18.0.5",
     "@angular/common": "^18.0.5",
