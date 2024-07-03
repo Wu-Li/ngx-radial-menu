@@ -10,6 +10,6 @@ export interface MenuItem {
   href?: string;
   target?: '_self' | '_blank' | '_parent' | '_top';
   click?: Function;
-  disabled?: boolean;
+  disabled?: boolean | Function;
   menus?: MenuItem[]
 }

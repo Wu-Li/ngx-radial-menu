@@ -21,10 +21,10 @@
         [style.height]="calc.listSize.height"
         [style.transform]="'rotate('+ this.calc.rotateDeg(i) +'deg) skew('+ this.calc.skewDeg +'deg)'"
     >
-      <a after
+      <a
         [href]="menuItem.href||''"
         [target]="menuItem.target||''"
-        [class.disabled]="menuItem.disabled()"
+        [class.disabled]="ifDisabled(menuItem.disabled)"
         [style.width]="calc.clickZoneSize.width"
         [style.height]="calc.clickZoneSize.height"
         [style.right]="calc.clickZoneSize.marginRight"
@@ -39,10 +39,10 @@
           <mat-icon *ngIf="menuItem.icon"
                     class="cm-icon"
                     [color]="menuItem.icon.color"
-                    [fontIcon]="menuItem.icon.fontIcon"
-                    [fontSet]="menuItem.icon.fontSet"
+                    [fontIcon]="menuItem.icon.fontIcon||''"
+                    [fontSet]="menuItem.icon.fontSet||''"
                     [inline]="menuItem.icon.inline"
-                    [svgIcon]="menuItem.icon.svgIcon"
+                    [svgIcon]="menuItem.icon.svgIcon||''"
                     [style.width]="calc.iconSize"
                     [style.height]="calc.iconSize"
                     [style.font-size]="calc.iconSize"
@@ -51,7 +51,7 @@
           <span class="text"
                 [style.margin-top]="menuItem.icon ? calc.withIconMarginTop : calc.textTop"
                 [style.top]="menuItem.icon ? calc.withIconTop : 0"
-          >{{menuItem.text}}</span>
+          >{{menuItem.title}}</span>
         </div>
       </a>
       <ngx-radial-menu

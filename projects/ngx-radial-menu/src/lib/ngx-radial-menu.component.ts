@@ -4,12 +4,18 @@ import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models"
 import Calculation from "./classes/calculation.class";
 import {AfterDirective} from "./directives/after.directive";
 import {MatIconModule} from "@angular/material/icon";
+import {NgxRadialMenuService} from "./ngx-radial-menu.service";
+import {CommonModule} from "@angular/common";
+import {BrowserModule} from "@angular/platform-browser";
+
 @Component({
   selector: 'ngx-radial-menu',
   standalone: true,
   imports: [
     AfterDirective,
-    MatIconModule
+    MatIconModule,
+    CommonModule,
+    BrowserModule
   ],
   providers: [
     NgxRadialMenuService
@@ -27,7 +33,7 @@ export class NgxRadialMenuComponent implements OnInit {
   public percent!: string;
   public observables: Observable<Click>[] = [];
   public data: Object = {};
-  public coordinates?: Coordinates;
+  public coordinates: Coordinates = {x:0,y:0};
   public menuOpen: boolean = false;
 
   constructor(
@@ -46,13 +52,12 @@ export class NgxRadialMenuComponent implements OnInit {
   }
 
   /** Menu Visibility **/
-  public show(coordinates?: Coordinates) {
+  public show(coordinates: Coordinates) {
     this.coordinates = coordinates;
     this.menuOpen = true;
   }
   public hide() {
     this.menuOpen = false;
-    delete this.coordinates;
   }
 
   /** Anchors **/
@@ -62,6 +67,10 @@ export class NgxRadialMenuComponent implements OnInit {
       this.hide();
       if(this.parentMenu) this.parentMenu.hide();
     }
+  }
+  public ifDisabled(disabled: boolean | Function | undefined) {
+    if (disabled instanceof Function) return disabled();
+    else return !!disabled;
   }
 
   /** Submenus **/
@@ -84,4 +93,3 @@ export class NgxRadialMenuComponent implements OnInit {
   }
 }
 
-import {NgxRadialMenuService} from "./ngx-radial-menu.service";
