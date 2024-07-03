@@ -4,14 +4,15 @@ import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models"
 import Calculation from "./classes/calculation.class";
 import {AfterDirective} from "./directives/after.directive";
 import {MatIconModule} from "@angular/material/icon";
-import {NgxRadialMenuService} from "./ngx-radial-menu.service";
-
 @Component({
   selector: 'ngx-radial-menu',
   standalone: true,
   imports: [
     AfterDirective,
     MatIconModule
+  ],
+  providers: [
+    NgxRadialMenuService
   ],
   templateUrl: './ngx-radial-menu.component.html',
   styleUrls: ['./ngx-radial-menu.component.css'],
@@ -82,3 +83,5 @@ export class NgxRadialMenuComponent implements OnInit {
     }
   }
 }
+
+import {NgxRadialMenuService} from "./ngx-radial-menu.service";
