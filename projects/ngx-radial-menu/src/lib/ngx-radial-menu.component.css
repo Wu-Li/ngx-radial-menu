@@ -1,3 +1,7 @@
+.circular-menu * {
+  backface-visibility: hidden !important;
+  transform: translateZ(0);
+}
 .circular-menu {
   font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "STHeitiSC-Light", "Microsoft YaHei", Arial, sans-serif;
   z-index: 1040;
@@ -5,12 +9,12 @@
   background: transparent;
   opacity: 0;
   position: fixed;
-  display: none;
+  /*display: none;*/
   transition: opacity .3s ease, transform .3s ease;
   cursor: default;
   transform: scale(0.1);
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
   /*cover to prevent extra space of anchors from being clickable*/
 }
 /* line 17, ../../sass/circular-menu.scss */
@@ -26,7 +30,7 @@
   content: ".";
   display: block;
   position: absolute;
-  left: 50%;
+  left: calc(50% + 20px);
   top: 50%;
   border-radius: 50%;
   z-index: 10;

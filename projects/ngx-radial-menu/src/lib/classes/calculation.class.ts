@@ -31,6 +31,9 @@ export default class Calculation {
   textTop: string;
   iconSize: string;
   iconMargin: string;
+  percent: string;
+  gradient: string;
+  skew: string;
 
   constructor(
     private config: MenuConfig,
@@ -52,6 +55,9 @@ export default class Calculation {
     this.textTop = this.getTextTop();
     this.iconSize = (this.clickZoneRadius * this.iconSizeRatio - this.fontHeight) + 'px';
     this.iconMargin = (this.clickZoneRadius * this.marginTopRatio - this.fontHeight) + 'px';
+    this.percent = (this.config.percent * 100) + '%';
+    this.gradient = this.getAnchorBackgroundGradient();
+    this.skew = this.getAnchorSkew();
   }
 
   private getCoverRadius(radius: number, percent: number): number {
@@ -61,7 +67,7 @@ export default class Calculation {
 
   private getCoverSize() {
     var l: string = (this.coverRadius * 2) + 'px';
-    var m: string = (-l / 2) + 'px';
+    var m: string = (-this.coverRadius) + 'px';
     return {
       width:  l,
       height: l,
@@ -114,4 +120,20 @@ export default class Calculation {
   }
 
   getTextTop = () => (this.clickZoneRadius * this.middleRatio - this.fixedTop + 'px')
+
+  getAnchorSkew() {
+    let skew: string = 'skew('
+    skew += (-this.skewDeg);
+    skew += 'deg) rotate(';
+    skew += this.unskewDeg;
+    skew += 'deg) scale(1)';
+    return skew;
+  }
+  getAnchorBackgroundGradient() {
+    let gradient: string = 'radial-gradient(transparent ';
+    gradient += this.percent + ', ';
+    gradient += this.config.background + ' ';
+    gradient += this.percent + ')';
+    return gradient;
+  }
 }

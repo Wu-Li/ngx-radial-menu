@@ -11,7 +11,6 @@
   [after.margin-top]="this.calc.coverSize.marginTop"
   [after.border]="'3px solid ' + this.config.pageBackground"
   [class.opened-nav]="menuOpen"
-  [style.display]="menuOpen ? 'block' : 'none'"
   [style.top]="coordinates!.y+'px'"
   [style.left]="coordinates!.x+'px'"
   (click)="this.hide()"
@@ -23,15 +22,15 @@
         [style.transform]="'rotate('+ this.calc.rotateDeg(i) +'deg) skew('+ this.calc.skewDeg +'deg)'"
     >
       <a
-        [href]="menuItem.href||''"
-        [target]="menuItem.target||''"
+        [attr.href]="menuItem.href ?? null"
+        [attr.target]="menuItem.target ?? null"
         [class.disabled]="ifDisabled(menuItem.disabled)"
         [style.width]="calc.clickZoneSize.width"
         [style.height]="calc.clickZoneSize.height"
         [style.right]="calc.clickZoneSize.marginRight"
         [style.bottom]="calc.clickZoneSize.marginBottom"
-        [style.transform]="'skew(' + -this.calc.skewDeg + 'deg) rotate(' + this.calc.unskewDeg + 'deg) scale(1)'"
-        [style.background]="'radial-gradiant(transparent ' + percent + ', ' + this.config.background + ' ' + percent + ')'"
+        [style.transform]="calc.skew"
+        [style.background]="calc.gradient"
         (click)="menuItemClick($event, menuItem)"
       >
         <div class="horizontal"
@@ -39,7 +38,7 @@
         >
           <mat-icon *ngIf="menuItem.icon"
                     class="cm-icon"
-                    [color]="menuItem.icon.color"
+                    [style.color]="menuItem.icon.color"
                     [fontIcon]="menuItem.icon.fontIcon||''"
                     [fontSet]="menuItem.icon.fontSet||''"
                     [inline]="menuItem.icon.inline"

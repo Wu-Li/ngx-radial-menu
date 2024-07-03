@@ -42,7 +42,6 @@ export class NgxRadialMenuComponent implements OnInit {
 
   ngOnInit() {
     this.config = {...defaultConfig, ...this.menuConfig};
-    this.percent = (this.config.percent * 100) + '%';
     this.calc = new Calculation(this.config);
     this.observables = this.config.menus.map(menu => this.menuService.registerMenuItem(menu));
     this.observables.map((obs: Observable<Click>) =>
