@@ -1,6 +1,23 @@
 {
   "name": "ngx-radial-menu",
-  "version": "0.0.2",
+  "version": "0.0.4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wu-Li/ngx-radial-menu.git"
+  },
+  "keywords": [
+    "angular",
+    "radial",
+    "ngx",
+    "circular",
+    "menu",
+    "wheel",
+    "navigation"
+  ],
+  "author": "Wu-Li",
+  "contributors": ["circular-menu: yandongCoder"],
+  "license": "ISC",
+  "private": false,
   "peerDependencies": {
     "@angular/common": "^18.0.5",
     "@angular/core": "^18.0.5",
