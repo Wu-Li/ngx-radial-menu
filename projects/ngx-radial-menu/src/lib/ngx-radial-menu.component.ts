@@ -29,11 +29,11 @@ export class NgxRadialMenuComponent implements OnInit {
   @Input('config') menuConfig?: Partial<MenuConfig>;
   @Input('parentMenu') parentMenu?: NgxRadialMenuComponent;
   @Input('parentMenuItem') parentMenuItem?: MenuItem;
+  @Input('data') data: Object = {};
 
   public config!: MenuConfig;
   public calc!: Calculation;
   public observables: Observable<Click>[] = [];
-  public data: Object = {};
   public coordinates: Coordinates = {x:0,y:0};
   public menuOpen: boolean = false;
   public delayShow: any;
