@@ -13,13 +13,14 @@ npm install ngx-radial-menu
 
 ## Component Usage
 
-`<ngx-radial-menu [config]="menuConfig"></ngx-radial-menu>`
+`<ngx-radial-menu [config]="menuConfig" [data]="menuData"></ngx-radial-menu>`
 
 ## Config
 
-### Options
+`[config]` Apply a `Partial<MenuConfig>` object with any of the properties under options below.
+`[data]` An object with arbitrary data to be passed to any click functions that need it. Helpful to create menu options that act on the object targeted by the menu click event.
 
-Apply a `Partial<MenuConfig>` object with any of these properties to the [config] input.
+### Options
 
 - **totalAngle**: The total arc of the menu (i.e. 180 is a half circle)
   - value: `0-360` (unit is unnecessary)
@@ -63,7 +64,8 @@ Apply a `Partial<MenuConfig>` object with any of these properties to the [config
   - color: Any acceptable CSS color
 - href: `string` (url, like "http://google.com" or "#hash")
 - target: `'_self' | '_blank' | '_parent' | '_top'` for href links
-- click: `Function` (click callback function)
+- click: `(event: MouseEvent, data: {...}) => void` (click callback function)
+  - Assign any data needed for the callback functions to the [data] input.
 - disabled: `boolean | () => boolean` (boolean value, or a boolean valued function)
 
 ### Methods

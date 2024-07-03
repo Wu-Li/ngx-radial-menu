@@ -1,11 +1,12 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {Observable} from "rxjs";
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Observable, Subject} from "rxjs";
 import {Click, Coordinates, defaultConfig, MenuConfig, MenuItem} from "./models";
 import Calculation from "./classes/calculation.class";
 import {AfterDirective} from "./directives/after.directive";
 import {MatIconModule} from "@angular/material/icon";
 import {NgxRadialMenuService} from "./ngx-radial-menu.service";
 import {CommonModule} from "@angular/common";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'ngx-radial-menu',
@@ -22,7 +23,7 @@ import {CommonModule} from "@angular/common";
   styleUrls: ['./ngx-radial-menu.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class NgxRadialMenuComponent implements OnInit {
+export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   protected readonly clearTimeout = clearTimeout;
 
   @ViewChild('menuElement', { static: false }) menuElement!: ElementRef;
@@ -48,11 +49,17 @@ export class NgxRadialMenuComponent implements OnInit {
     this.calc = new Calculation(this.config);
     this.observables = this.config.menus.map(menu => this.menuService.registerMenuItem(menu));
     this.observables.map((obs: Observable<Click>) =>
-      obs.subscribe(({event,handler}) => {
+      obs.pipe(takeUntil(this.destroy$)).subscribe(({event,handler}) => {
         if (handler) handler(event, this.data);
       }));
     if (this.parentMenuItem)
       this.parentMenuItem.subMenu = this;
+  }
+
+  private destroy: Subject<void> = new Subject<void>();
+  private destroy$: Observable<void> = this.destroy.asObservable();
+  ngOnDestroy() {
+    this.destroy.next();
   }
 
   /** Menu Visibility **/
