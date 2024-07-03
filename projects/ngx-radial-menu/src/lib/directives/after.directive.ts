@@ -1,5 +1,4 @@
 import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from '@angular/core';
-import {v4 as uuid} from 'uuid';
 
 @Directive({
   selector: '[after]',
@@ -20,7 +19,7 @@ export class AfterDirective implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    const id = uuid();
+    const id = this.generateRandomId();
     this.renderer.addClass(this.el.nativeElement, 'after-' + id);
     let styles = '.after-' + id + ':after { ';
     styles += this.width? 'width:' + this.width + ';' : '';
@@ -36,5 +35,9 @@ export class AfterDirective implements AfterViewInit {
     this.renderer.appendChild(style, text);
     let parent = this.renderer.parentNode(this.el.nativeElement);
     this.renderer.insertBefore(parent, style, this.el.nativeElement);
+  }
+
+  private generateRandomId(length: number = 10) {
+    return Math.random().toString(36).substring(2, length);
   }
 }

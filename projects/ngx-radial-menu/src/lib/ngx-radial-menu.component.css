@@ -20,6 +20,7 @@
 /* line 17, ../../sass/circular-menu.scss */
 .circular-menu.circular-sub-menu {
   transition: all 0s ease 0s;
+  z-index: 1020;
 }
 /* line 19, ../../sass/circular-menu.scss */
 .circular-menu.circular-sub-menu:after {
@@ -43,6 +44,9 @@
   transition: opacity .3s ease, transform .3s ease;
   transform: scale(1);
   pointer-events: auto;
+}
+.circular-menu.circular-sub-menu.opened-nav {
+  pointer-events: none;
 }
 /* line 43, ../../sass/circular-menu.scss */
 .circular-menu.opened-nav li {

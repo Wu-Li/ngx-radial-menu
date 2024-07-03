@@ -1,3 +1,5 @@
+import {NgxRadialMenuComponent} from "../ngx-radial-menu.component";
+
 export interface MenuItem {
   title: string,
   icon?: {
@@ -12,4 +14,5 @@ export interface MenuItem {
   click?: Function;
   disabled?: boolean | Function;
   menus?: MenuItem[]
+  subMenu?: NgxRadialMenuComponent
 }
