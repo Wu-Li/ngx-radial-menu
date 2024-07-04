@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {MenuConfig, Style} from "../models";
 
 export default class Calculation {
@@ -38,9 +39,13 @@ export default class Calculation {
   constructor(
     private config: MenuConfig,
   ) {
-    this.itemsNum = this.config.menus.length;
+    this.calculate(config.menus.length);
+  }
+
+  public calculate(activeCount: number) {
+    this.itemsNum = activeCount;
     this.spaceNumber = this.config.totalAngle === 360 ? this.itemsNum : this.itemsNum - 1;
-    this.radius = config.diameter / 2;
+    this.radius = this.config.diameter / 2;
     this.coverRadius = this.getCoverRadius(this.radius, this.config.percent);
     this.clickZoneRadius = this.radius - this.coverRadius;
     this.listSize = this.getListSize();

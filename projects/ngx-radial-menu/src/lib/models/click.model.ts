@@ -1,4 +1,5 @@
 export interface Click {
   event: MouseEvent,
-  handler?: Function
+  handler?: Function,
+  data: any
 }

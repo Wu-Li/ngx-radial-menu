@@ -17,7 +17,8 @@ export class NgxRadialMenuService {
   public registerMenuItem(menu: MenuItem) {
     let subject: Subject<Click> = new Subject();
     let handler = menu.click;
-    menu.click = (event: MouseEvent) => subject.next({event, handler});
+    menu.click = (event: MouseEvent) => subject.next({event, handler, data:this.data});
     return subject.asObservable().pipe(takeUntil(this.destroy$));
   }
+  public data: any;
 }

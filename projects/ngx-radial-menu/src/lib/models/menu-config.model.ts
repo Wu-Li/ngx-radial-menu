@@ -13,7 +13,8 @@ export interface MenuConfig {
   horizontal: boolean;
   animation: string;
   hideAfterClick: boolean;
-  menus: MenuItem[]
+  allMenus: MenuItem[];
+  menus: MenuItem[];
 }
 
 export const defaultConfig: MenuConfig = {
@@ -28,5 +29,6 @@ export const defaultConfig: MenuConfig = {
   horizontal: true,
   animation: "into",
   hideAfterClick: true,
+  allMenus: [],
   menus: []
 };

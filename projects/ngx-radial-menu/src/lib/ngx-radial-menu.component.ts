@@ -30,7 +30,6 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   @Input('config') menuConfig?: Partial<MenuConfig>;
   @Input('parentMenu') parentMenu?: NgxRadialMenuComponent;
   @Input('parentMenuItem') parentMenuItem?: MenuItem;
-  @Input('data') data: Object = {};
 
   public config!: MenuConfig;
   public calc!: Calculation;
@@ -39,6 +38,8 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   public menuOpen: boolean = false;
   public delayShow: any;
   public delayHide: any;
+  public menus: MenuItem[] = [];
+
 
   constructor(
     private menuService: NgxRadialMenuService
@@ -49,27 +50,46 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
     this.calc = new Calculation(this.config);
     this.observables = this.config.menus.map(menu => this.menuService.registerMenuItem(menu));
     this.observables.map((obs: Observable<Click>) =>
-      obs.pipe(takeUntil(this.destroy$)).subscribe(({event,handler}) => {
-        if (handler) handler(event, this.data);
+      obs.pipe(takeUntil(this.destroy$)).subscribe(
+        ({event,handler, data}) => {
+        if (handler) handler(event, data);
       }));
     if (this.parentMenuItem)
       this.parentMenuItem.subMenu = this;
   }
 
-  private destroy: Subject<void> = new Subject<void>();
+  private destroy: Subject<void> = new Subject();
   private destroy$: Observable<void> = this.destroy.asObservable();
-  ngOnDestroy() {
-    this.destroy.next();
-  }
+  ngOnDestroy = this.destroy.next;
 
   /** Menu Visibility **/
-  public show(coordinates: Coordinates) {
+  public show(coordinates: Coordinates, data?: any, disable?: string[]) {
+    if (data) this.menuService.data = data;
+    this.menus = this.filterDisabledMenus(this.config.menus, disable);
+    if (disable && disable.length > 0)
+      this.calc.calculate(this.menus.length);
     this.coordinates = {x:coordinates.x-40,y:coordinates.y};
     this.menuOpen = true;
   }
+  public filterDisabledMenus(menus: MenuItem[], disable?: string[]) {
+    if (!disable || disable.length == 0) return menus;
+    return menus
+      .filter((menuItem) => !disable?.includes(menuItem.title))
+      .map((menuItem) => {
+        if (menuItem.menus?.length) {
+          const disabledSubs = disable
+            .filter(disPath => disPath.startsWith(menuItem.title) && disPath != menuItem.title)
+            .map(disPath => disPath.slice(disPath.indexOf('.') + 1));
+          menuItem.menus = this.filterDisabledMenus(menuItem.menus, disabledSubs)
+        }
+        return menuItem;
+      });
+  }
   public hide() {
+    Object.values(this.menus).map(menu => menu.subMenu?.hide());
+    delete this.menuService.data;
+    this.menus = [];
     this.menuOpen = false;
-    this.config.menus.map(menu => menu.subMenu?.hide());
   }
 
   /** Anchors **/
@@ -89,7 +109,6 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   private subMenuSizeRatio = 5 / 3;
   private percentRatio = 0.45;
   private centralDegRatio = 0.618;
-  //Should be inserted before parent container? How?
   public subMenuConfig(parent: MenuItem, index: number){
     const totalAngle = this.calc.centralDeg * this.centralDegRatio * parent.menus!.length;
     const start = this.calc.rotateDeg(index) - totalAngle / 2 + this.calc.centralDeg / 2;
@@ -106,7 +125,7 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
 
   onMouseEnter($event: MouseEvent, menuItem: MenuItem) {
     this.delayShow = setTimeout(() => {
-      this.config.menus.map(menu => menu.subMenu?.hide());
+      Object.values(this.config.menus).map(menu => menu.subMenu?.hide());
       let coordinates = {
         x:this.menuElement.nativeElement.offsetLeft+40 + this.calc.radius,
         y:this.menuElement.nativeElement.offsetTop + this.calc.radius
@@ -124,5 +143,7 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
       }, 200);
     }
   }
+
+  protected readonly Object = Object;
 }
 

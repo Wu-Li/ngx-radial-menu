@@ -16,7 +16,7 @@
   (click)="this.hide()"
 >
   <ul>
-    <li *ngFor="let menuItem of config.menus; let i = index"
+    <li *ngFor="let menuItem of menus; let i = index"
         [style.width]="calc.listSize.width"
         [style.height]="calc.listSize.height"
         [style.transform]="'rotate('+ this.calc.rotateDeg(i) +'deg) skew('+ this.calc.skewDeg +'deg)'"
@@ -49,7 +49,6 @@
                     [style.font-size]="calc.iconSize"
                     [style.margin-top]="calc.iconMargin"
           ></mat-icon>
-
           <span class="text"
                 [style.margin-top]="menuItem.icon ? calc.withIconMarginTop : calc.textTop"
                 [style.top]="menuItem.icon ? calc.withIconTop : 0"
@@ -59,7 +58,7 @@
     </li>
   </ul>
 </menu>
-<ng-container *ngFor="let menuItem of config.menus; let i = index">
+<ng-container *ngFor="let menuItem of menus; let i = index">
   <ngx-radial-menu
     *ngIf="menuItem.menus && menuItem.menus.length > 0"
     [config]="subMenuConfig(menuItem, i)"

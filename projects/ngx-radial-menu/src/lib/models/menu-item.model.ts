@@ -13,6 +13,6 @@ export interface MenuItem {
   target?: '_self' | '_blank' | '_parent' | '_top';
   click?: Function;
   disabled?: boolean | Function;
-  menus?: MenuItem[]
-  subMenu?: NgxRadialMenuComponent
+  subMenu?: NgxRadialMenuComponent;
+  menus?: MenuItem[];
 }
