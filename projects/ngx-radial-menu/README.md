@@ -86,15 +86,14 @@ npm install ngx-radial-menu
 
 Here is an example of how you might use show with all of its arguments:
 
-`public showRadialMenu(event:MouseEvent, vertex: Vertex) {`
+```
+public showRadialMenu(event:MouseEvent, vertex: Vertex) {
+  let filter = [];  
+  if (vertex.pinned) filter.push('pin')
+  else filter.push('unpin')
+  this.ngxRadialMenu.show({x:event.clientX,y:event.clientY}, vertex, filter)
+ }
+```
 
-`let filter = [];`
-
-`if (vertex.pinned) filter.push('pin')`
-
-`else filter.push('unpin')`
-
-`this.ngxRadialMenu.show({x:event.clientX,y:event.clientY}, vertex, filter)`
-
-This will cause ensure that the 'unpin' menu item is only available when the vertex is pinned, and the pin option is available when it is not already pinned.
+This will ensure that the 'unpin' menu item is only available when the vertex is pinned, and the pin option is available when it is not already pinned.
 Passing the vertex in as the data object allows all of the menu callback functions to act on that specific vertex, or to make use properties of that vertex. 
