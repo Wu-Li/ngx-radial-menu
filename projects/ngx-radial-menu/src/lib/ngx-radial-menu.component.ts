@@ -65,22 +65,22 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   /** Menu Visibility **/
   public show(coordinates: Coordinates, data?: any, disable?: string[]) {
     if (data) this.menuService.data = data;
-    this.menus = this.filterDisabledMenus(this.config.menus, disable);
+    this.menus = this.filterMenus(this.config.menus, disable);
     if (disable && disable.length > 0)
       this.calc.calculate(this.menus.length);
     this.coordinates = {x:coordinates.x-40,y:coordinates.y};
     this.menuOpen = true;
   }
-  public filterDisabledMenus(menus: MenuItem[], disable?: string[]) {
-    if (!disable || disable.length == 0) return menus;
+  public filterMenus(menus: MenuItem[], filter?: string[]) {
+    if (!filter || filter.length == 0) return menus;
     return menus
-      .filter((menuItem) => !disable?.includes(menuItem.title))
+      .filter((menuItem) => !filter?.includes(menuItem.title))
       .map((menuItem) => {
         if (menuItem.menus?.length) {
-          const disabledSubs = disable
+          const disabledSubs = filter
             .filter(disPath => disPath.startsWith(menuItem.title) && disPath != menuItem.title)
             .map(disPath => disPath.slice(disPath.indexOf('.') + 1));
-          menuItem.menus = this.filterDisabledMenus(menuItem.menus, disabledSubs)
+          menuItem.menus = this.filterMenus(menuItem.menus, disabledSubs)
         }
         return menuItem;
       });

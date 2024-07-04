@@ -1,6 +1,6 @@
 {
   "name": "ngx-radial-menu",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wu-Li/ngx-radial-menu.git"
@@ -12,7 +12,11 @@
     "circular",
     "menu",
     "wheel",
-    "navigation"
+    "navigation",
+    "radial menu",
+    "circular menu",
+    "context menu",
+    "dynamic menu"
   ],
   "author": "Wu-Li",
   "contributors": ["circular-menu: yandongCoder"],
