@@ -78,7 +78,7 @@ npm install ngx-radial-menu
 ### Methods
 
 - **hide()**: hide menus
-- 
+
 - **show (coordinates: {x: number, y: number}, data?: any, filter?: string[])**：show menus
   - coordinates: The location to open the menu, usually derived from event.clientX and event.clientY of a MouseEvent
   - data: any data you want to make available to the click functions. This data is set once when the menu is generated, and used by all click callbacks, so if different functions need different data items, be sure to structure your data input here to accommodate that.
