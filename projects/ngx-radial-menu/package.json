@@ -1,6 +1,6 @@
 {
   "name": "ngx-radial-menu",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wu-Li/ngx-radial-menu.git"
@@ -19,7 +19,9 @@
     "dynamic menu"
   ],
   "author": "Wu-Li",
-  "contributors": ["circular-menu: yandongCoder"],
+  "contributors": [
+    "circular-menu: yandongCoder"
+  ],
   "license": "ISC",
   "private": false,
   "peerDependencies": {
@@ -29,5 +31,5 @@
     "tslib": "^2.3.0"
   },
   "sideEffects": false,
-  "devDependencies": {  }
+  "devDependencies": {}
 }
