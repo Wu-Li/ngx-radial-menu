@@ -1,6 +1,6 @@
 {
   "name": "ngx-radial-menu",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -49,7 +49,6 @@
     "@angular/core": "^20.3.0",
     "@angular/material": "^20.2.3",
     "@types/jasmine": "~5.1.0",
-    "jasmine-core": "~5.1.0",
     "ng-packagr": "^20.3.0",
     "tslib": "^2.3.0",
     "typescript": "^5.9.2"
