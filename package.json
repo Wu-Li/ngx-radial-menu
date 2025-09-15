@@ -1,6 +1,6 @@
 {
   "name": "ngx-radial-menu",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -32,7 +32,7 @@
   "license": "ISC",
   "private": false,
   "dependencies": {
-    "@angular/cdk": "^19.1.5",
+    "@angular/cdk": "^20.2.3",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/forms": "^20.3.0",
@@ -47,7 +47,7 @@
     "@angular/cli": "^20.3.1",
     "@angular/compiler-cli": "^20.3.0",
     "@angular/core": "^20.3.0",
-    "@angular/material": "^19.1.5",
+    "@angular/material": "^20.2.3",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "ng-packagr": "^20.3.0",
