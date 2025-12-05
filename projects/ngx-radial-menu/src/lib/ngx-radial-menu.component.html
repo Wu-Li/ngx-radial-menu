@@ -16,54 +16,64 @@
   (click)="this.hide()"
 >
   <ul>
-    <li *ngFor="let menuItem of menus; let i = index"
+
+    @for (menuItem of menus; track $index; let i = $index) {
+      <li
         [style.width]="calc.listSize.width"
         [style.height]="calc.listSize.height"
         [style.transform]="'rotate('+ this.calc.rotateDeg(i) +'deg) skew('+ this.calc.skewDeg +'deg)'"
-    >
-      <a
-        [attr.href]="menuItem.href ?? null"
-        [attr.target]="menuItem.target ?? null"
-        [class.disabled]="ifDisabled(menuItem.disabled)"
-        [style.width]="calc.clickZoneSize.width"
-        [style.height]="calc.clickZoneSize.height"
-        [style.right]="calc.clickZoneSize.marginRight"
-        [style.bottom]="calc.clickZoneSize.marginBottom"
-        [style.transform]="calc.skew"
-        [style.background]="calc.gradient"
-        (click)="menuItemClick($event, menuItem)"
-        (mouseenter)="onMouseEnter($event, menuItem)"
-        (mouseleave)="onMouseLeave($event, menuItem)"
       >
-        <div class="horizontal"
-             [style.transform]="config.horizontal ? 'rotate('+ calc.horizontalDeg(i) +'deg)' : ''"
+        <a
+          [attr.href]="menuItem.href ?? null"
+          [attr.target]="menuItem.target ?? null"
+          [class.disabled]="ifDisabled(menuItem.disabled)"
+          [style.width]="calc.clickZoneSize.width"
+          [style.height]="calc.clickZoneSize.height"
+          [style.right]="calc.clickZoneSize.marginRight"
+          [style.bottom]="calc.clickZoneSize.marginBottom"
+          [style.transform]="calc.skew"
+          [style.background]="calc.gradient"
+          (click)="menuItemClick($event, menuItem)"
+          (mouseenter)="onMouseEnter($event, menuItem)"
+          (mouseleave)="onMouseLeave($event, menuItem)"
         >
-          <mat-icon *ngIf="menuItem.icon"
-                    class="cm-icon"
-                    [style.color]="menuItem.icon.color"
-                    [fontIcon]="menuItem.icon.fontIcon||''"
-                    [fontSet]="menuItem.icon.fontSet||''"
-                    [svgIcon]="menuItem.icon.svgIcon||''"
-                    [style.width]="calc.iconSize"
-                    [style.height]="calc.iconSize"
-                    [style.font-size]="calc.iconSize"
-                    [style.margin-top]="calc.iconMargin"
-          ></mat-icon>
-          <span class="text"
-                [style.margin-top]="menuItem.icon ? calc.withIconMarginTop : calc.textTop"
-                [style.top]="menuItem.icon ? calc.withIconTop : 0"
-          >{{menuItem.title}}</span>
-        </div>
-      </a>
-    </li>
+          <div class="horizontal"
+               [style.transform]="config.horizontal ? 'rotate('+ calc.horizontalDeg($index) +'deg)' : ''"
+          >
+            @if (menuItem.icon) {
+              <mat-icon
+                class="cm-icon"
+                [style.color]="menuItem.icon.color"
+                [fontIcon]="menuItem.icon.fontIcon||''"
+                [fontSet]="menuItem.icon.fontSet||''"
+                [svgIcon]="menuItem.icon.svgIcon||''"
+                [style.width]="calc.iconSize"
+                [style.height]="calc.iconSize"
+                [style.font-size]="calc.iconSize"
+                [style.margin-top]="calc.iconMargin"
+              ></mat-icon>
+            }
+            <span class="text"
+                  [style.margin-top]="menuItem.icon ? calc.withIconMarginTop : calc.textTop"
+                  [style.top]="menuItem.icon ? calc.withIconTop : 0"
+            >{{ menuItem.title }}</span>
+          </div>
+        </a>
+      </li>
+    }
+
   </ul>
 </menu>
-<ng-container *ngFor="let menuItem of menus; let i = index">
-  <ngx-radial-menu
-    *ngIf="menuItem.menus && menuItem.menus.length > 0"
-    [config]="subMenuConfig(menuItem, i)"
-    [parentMenu]="this"
-    [parentMenuItem]="menuItem"
-    (mouseenter)="clearTimeout(delayHide); clearTimeout(delayShow)"
-  ></ngx-radial-menu>
-</ng-container>
+
+@for (menuItem of menus; track $index; let i = $index) {
+  @if (menuItem.menus && menuItem.menus.length > 0) {
+    <ngx-radial-menu
+      [config]="subMenuConfig(menuItem, i)"
+      [parentMenu]="this"
+      [parentMenuItem]="menuItem"
+      (mouseenter)="clearTimeout(delayHide); clearTimeout(delayShow)"
+    ></ngx-radial-menu>
+  }
+}
+
+

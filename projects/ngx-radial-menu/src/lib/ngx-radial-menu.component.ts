@@ -48,14 +48,22 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.config = {...defaultConfig, ...this.menuConfig};
     this.calc = new Calculation(this.config);
-    this.observables = this.config.menus.map(menu => this.menuService.registerMenuItem(menu));
-    this.observables.map((obs: Observable<Click>) =>
-      obs.pipe(takeUntil(this.destroy$)).subscribe(
-        ({event,handler, data}) => {
-        if (handler) handler(event, data);
-      }));
     if (this.parentMenuItem)
       this.parentMenuItem.subMenu = this;
+    else {
+      this.observables = this.config.menus.flatMap(menu => {
+        return [
+          this.menuService.registerMenuItem(menu),
+          ...(menu.menus && menu.menus.length > 0) ?
+            menu.menus.map(m => this.menuService.registerMenuItem(m)) : []
+        ]
+      });
+      this.observables.map((obs: Observable<Click>) =>
+        obs.pipe(takeUntil(this.destroy$)).subscribe(
+          ({event, handler, data}) => {
+            if (handler) handler(event, data);
+          }));
+    }
   }
 
   private destroy: Subject<void> = new Subject();
@@ -68,7 +76,7 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
     this.menus = this.filterMenus(this.config.menus, disable);
     if (disable && disable.length > 0)
       this.calc.calculate(this.menus.length);
-    this.coordinates = {x:coordinates.x-40,y:coordinates.y};
+    this.coordinates = {x:coordinates.x,y:coordinates.y};
     this.menuOpen = true;
   }
   public filterMenus(menus: MenuItem[], filter?: string[]) {
@@ -124,14 +132,14 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   }
 
   onMouseEnter($event: MouseEvent, menuItem: MenuItem) {
-    this.delayShow = setTimeout(() => {
+    // this.delayShow = setTimeout(() => {
       Object.values(this.config.menus).map(menu => menu.subMenu?.hide());
       let coordinates = {
-        x:this.menuElement.nativeElement.offsetLeft+40 + this.calc.radius,
+        x:this.menuElement.nativeElement.offsetLeft + this.calc.radius,
         y:this.menuElement.nativeElement.offsetTop + this.calc.radius
       }
       menuItem.subMenu?.show(coordinates);
-    }, 150);
+    // }, 150);
   }
 
   onMouseLeave(e: MouseEvent, menuItem: MenuItem): void {
