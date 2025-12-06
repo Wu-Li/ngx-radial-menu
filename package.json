@@ -1,6 +1,6 @@
 {
   "name": "ngx-radial-menu",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

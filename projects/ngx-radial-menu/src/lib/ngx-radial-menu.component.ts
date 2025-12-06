@@ -103,11 +103,14 @@ export class NgxRadialMenuComponent implements OnInit,OnDestroy {
   /** Anchors **/
   public menuItemClick(event: MouseEvent, menuItem: MenuItem){
     if (menuItem.click) menuItem.click.call(this, event, menuItem);
-    if(this.config.hideAfterClick){
+    if (menuItem.subMenu) {
+      this.onMouseEnter(event, menuItem);
+      event.stopPropagation();
+    }
+    else if(this.config.hideAfterClick){
       this.hide();
       if(this.parentMenu) this.parentMenu.hide();
     }
-    if (menuItem.subMenu) this.onMouseEnter(event, menuItem);
   }
   public ifDisabled(disabled: boolean | Function | undefined) {
     if (disabled instanceof Function) return disabled();
