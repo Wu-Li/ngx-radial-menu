@@ -23,11 +23,7 @@
       "ngx-radial-menu": [
         "./dist/ngx-radial-menu"
       ]
-    },
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

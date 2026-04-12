@@ -5,7 +5,7 @@ import Calculation from "./classes/calculation.class";
 import {AfterDirective} from "./directives/after.directive";
 import {MatIconModule} from "@angular/material/icon";
 import {NgxRadialMenuService} from "./ngx-radial-menu.service";
-import {CommonModule} from "@angular/common";
+
 import {takeUntil} from "rxjs/operators";
 
 @Component({
@@ -13,9 +13,8 @@ import {takeUntil} from "rxjs/operators";
   standalone: true,
   imports: [
     AfterDirective,
-    CommonModule,
     MatIconModule
-  ],
+],
   providers: [
     NgxRadialMenuService
   ],
